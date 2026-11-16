@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>JC Live-Büro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <span class="brand-mark">JC</span>
+        <div>
+          <h1>Live-Büro</h1>
+          <p>J.C. HIGH SOLUTION ENGINEERING</p>
+        </div>
+      </div>
+
+      <div class="run-summary" aria-live="polite">
+        <div class="connection" id="connectionState">
+          <span class="connection-dot"></span>
+          <span id="connectionLabel">Verbinde …</span>
+        </div>
+        <div class="sync-copy">
+          <span>Letztes Rücklesen</span>
+          <strong id="lastSync">Noch offen</strong>
+        </div>
+        <button class="icon-button" id="refreshButton" type="button" aria-label="Jetzt aktualisieren" title="Jetzt aktualisieren">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 4v7h-7"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="workspace" aria-label="Live-Ansicht der Automationen">
+      <div class="office-stage" id="officeStage">
+        <div class="map-canvas">
+          <img src="assets/buero.png" alt="Bildliches Büro mit dot als zentralem Koordinator">
+          <svg class="flow-layer" id="flowLayer" viewBox="0 0 1000 667" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="station-layer" id="stationLayer"></div>
+        </div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <span class="empty-kicker">Fehler: Prüfbeleg fehlt</span>
+          <strong>Live-Daten konnten nicht zurückgelesen werden.</strong>
+          <span id="emptyReason">Der Feed ist nicht erreichbar.</span>
+        </div>
+
+        <div class="map-legend" aria-label="Statuslegende">
+          <span><i class="legend-dot is-live"></i> Aktueller Schritt</span>
+          <span><i class="legend-dot is-error"></i> Fehlerstelle</span>
+          <span><i class="legend-dot is-unknown"></i> Prüfbeleg fehlt</span>
+        </div>
+      </div>
+
+      <aside class="inspector" id="inspector">
+        <div class="inspector-head">
+          <div>
+            <span class="eyebrow">Ausgewählter Vorgang</span>
+            <h2 id="caseTitle">Noch kein Vorgang</h2>
+          </div>
+          <span class="case-status" id="caseStatus">Unbelegt</span>
+        </div>
+
+        <dl class="case-facts">
+          <div><dt>Kennung</dt><dd id="caseId">–</dd></div>
+          <div><dt>Zuständig</dt><dd id="caseOwner">–</dd></div>
+          <div><dt>Letzter Beleg</dt><dd id="caseEvidence">–</dd></div>
+          <div><dt>Nächster Schritt</dt><dd id="caseNext">–</dd></div>
+        </dl>
+
+        <div class="timeline-head">
+          <h3>Übergaben</h3>
+          <span id="caseUpdated">Keine Live-Daten</span>
+        </div>
+        <ol class="timeline" id="timeline"></ol>
+
+        <div class="case-picker-wrap">
+          <label for="casePicker">Vorgang wechseln</label>
+          <select id="casePicker" disabled><option>Keine Vorgänge</option></select>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="statusbar">
+      <span id="feedSource">Quelle: /api/feed</span>
+      <span>Nächste Aktualisierung in <strong id="countdown">60</strong> s</span>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
